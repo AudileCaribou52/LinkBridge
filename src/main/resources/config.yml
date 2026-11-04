@@ -1,0 +1,137 @@
+# LinkBridge Configuration
+# Discord ↔ Minecraft account linking system with standalone JDA bot
+
+# Discord Bot Settings
+discord:
+  # Bot token from Discord Developer Portal
+  token: "YOUR_BOT_TOKEN_HERE"
+  # Discord Guild (Server) ID where the bot operates
+  guildId: "YOUR_GUILD_ID_HERE"
+  # Channel ID for bot logs (optional)
+  logChannel: "YOUR_LOG_CHANNEL_ID_HERE"
+
+# Database Settings
+database:
+  # SQLite database file name (stored in plugin data folder)
+  file: "linkbridge.db"
+
+# Code Generation Settings
+code:
+  # Length of the generated code (6-8 characters)
+  length: 6
+  # Characters to use for code generation
+  charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  # Code expiration time in minutes
+  expiry-minutes: 10
+
+# LuckPerms group to Discord role mapping
+# Format: luckperms-group: "discord-role-id"
+groups:
+  owner: "ROLE_ID_OWNER"
+  admin: "ROLE_ID_ADMIN"
+  moderator: "ROLE_ID_MODERATOR"
+  member: "ROLE_ID_MEMBER"
+  default: "ROLE_ID_DEFAULT"
+
+# Discord role sync settings
+role-sync:
+  # Enable automatic role assignment on link
+  enabled: true
+  # Remove roles when unlinked
+  remove-on-unlink: true
+
+# Discord nickname sync settings
+nickname-sync:
+  # Enable automatic nickname setting on link
+  enabled: true
+  # Nickname format: [Rank] MinecraftName (max 32 chars)
+  format: "[%rank%] %name%"
+
+# Chat Bridge Settings
+chat-bridge:
+  # Enable the chat bridge between Minecraft and Discord
+  enabled: true
+  # Discord channel ID for chat bridge (required if enabled)
+  channelId: "YOUR_CHAT_CHANNEL_ID_HERE"
+  # Minecraft → Discord settings
+  minecraft-to-discord:
+    # Enable Minecraft to Discord forwarding
+    enabled: true
+    # Message format sent to Discord
+    # Placeholders: %player%, %displayname%, %rank%, %message%, %prefix%, %suffix%
+    format: "**%displayname%**: %message%"
+    # Ignore commands (starting with /)
+    ignore-commands: true
+    # Ignore messages from muted players (requires LuckPerms mute check)
+    ignore-muted: true
+    # Strip legacy color codes (&) from message
+    strip-legacy-colors: true
+    # Parse MiniMessage format from LuckPerms prefix/suffix
+    parse-minimessage: true
+    # Maximum message length (Discord limit is 2000)
+    max-length: 1900
+  # Discord → Minecraft settings
+  discord-to-minecraft:
+    # Enable Discord to Minecraft forwarding
+    enabled: true
+    # Message format broadcast to Minecraft players
+    # Placeholders: %username%, %displayname%, %message%, %avatar%
+    format: "<dark_gray>[<aqua>Discord<dark_gray>] <reset><gray>%displayname%: <white>%message%"
+    # Ignore messages from bots
+    ignore-bots: true
+    # Ignore messages from webhooks
+    ignore-webhooks: true
+    # Preserve emojis and Unicode
+    preserve-emojis: true
+    # Include attachment URLs in message
+    include-attachments: true
+    # Maximum message length
+    max-length: 256
+
+# Logging Settings
+logging:
+  # Enable debug logging for chat bridge
+  debug: false
+  # Log all bridged messages to console
+  log-messages: true
+  # Log Discord connection events
+  log-connections: true
+
+# Messages
+messages:
+  prefix: "<dark_gray>[<aqua>LinkBridge<dark_gray>] <reset>"
+  # Link command messages
+  link-code-generated: "<green>Your Discord linking code: <yellow>%code%"
+  link-instruction: "<gray>Use </link> command on Discord with this code: <yellow>/link %code%"
+  link-already-linked: "<red>You are already linked to a Discord account!"
+  link-code-exists: "<yellow>You already have an active code. Wait for it to expire or use /discord unlink first."
+  # Unlink command messages
+  unlink-success: "<green>Successfully unlinked your Discord account."
+  unlink-not-linked: "<red>You are not linked to any Discord account."
+  # Status command messages
+  status-linked: "<green>You are linked to Discord ID: <yellow>%discord_id%"
+  status-not-linked: "<red>You are not linked to any Discord account."
+  # Verification messages (from Discord bot)
+  verify-success: "<green>Successfully linked <yellow>%minecraft_name%<green> to Discord!"
+  verify-invalid-code: "<red>Invalid or expired code."
+  verify-already-used: "<red>This code has already been used."
+  verify-discord-already-linked: "<red>This Discord account is already linked to a Minecraft account."
+  verify-minecraft-already-linked: "<red>This Minecraft account is already linked to a Discord account."
+  # Admin messages
+  reload-success: "<green>LinkBridge configuration reloaded."
+  forceunlink-success: "<green>Forcefully unlinked <yellow>%player%<green>."
+  forceunlink-not-linked: "<red>That player is not linked."
+  forceunlink-player-not-found: "<red>Player not found."
+  # Chat bridge messages
+  chatbridge-enabled: "<green>Chat bridge enabled."
+  chatbridge-disabled: "<red>Chat bridge disabled."
+  chatbridge-status-enabled: "<green>Chat bridge is <green>enabled<gray>."
+  chatbridge-status-disabled: "<red>Chat bridge is <red>disabled<gray>."
+  chatbridge-channel-set: "<green>Chat bridge channel set to <yellow>%channel%<green>."
+  chatbridge-channel-invalid: "<red>Invalid channel ID."
+  chatbridge-reloaded: "<green>Chat bridge configuration reloaded."
+  # Errors
+  error-luckperms-not-found: "<yellow>LuckPerms not found. Role sync disabled."
+  error-generic: "<red>An error occurred. Check console for details."
+  # Permissions
+  no-permission: "<red>You don't have permission to use this command."

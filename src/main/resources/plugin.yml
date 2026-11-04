@@ -1,0 +1,34 @@
+name: LinkBridge
+version: 1.0.1
+main: com.directdrop.linkbridge.LinkBridge
+api-version: 26.1.2
+load: POSTWORLD
+author: DirectDrop
+description: A Minecraft Discord linking system with standalone JDA bot
+softdepend: [LuckPerms]
+
+commands:
+  discord:
+    description: Main discord linking command
+    usage: /discord <link|unlink|status>
+    permission: linkbridge.use
+    aliases: [discordlink, dlink]
+  linkbridge:
+    description: Admin commands for LinkBridge
+    usage: /linkbridge <reload|forceunlink>
+    permission: linkbridge.admin
+    aliases: [lb]
+
+permissions:
+  linkbridge.use:
+    description: Allows using the /discord command
+    default: true
+  linkbridge.admin:
+    description: Allows using admin commands
+    default: op
+  linkbridge.reload:
+    description: Allows reloading the plugin config
+    default: op
+  linkbridge.forceunlink:
+    description: Allows force unlinking players
+    default: op
